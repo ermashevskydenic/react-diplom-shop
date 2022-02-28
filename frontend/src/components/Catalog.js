@@ -91,8 +91,7 @@ function Catalog() {
     }
     console.log(items);
 
-    if (categories) {
-        return (
+        return (categories &&
             <Fragment>
                 <ul className='catalog-categories nav justify-content-center'>
                     <li className='nav-item'>
@@ -130,7 +129,6 @@ function Catalog() {
                 }
             </Fragment>
         );
-    } else { return null; }
 }
 
 export default Catalog;

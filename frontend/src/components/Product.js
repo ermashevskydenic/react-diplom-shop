@@ -14,7 +14,7 @@ function Product({ match }) {
     const dispatch = useDispatch()//
 
     useEffect(() => {
-        if (data.id !== undefined) {
+        if (data.id) {
             setForm({
                 image: data.images[0],
                 title: data.title,

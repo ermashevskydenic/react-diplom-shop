@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { updateCart } from '../actions/actionCreators'
 
 function Cart() {
@@ -10,6 +10,7 @@ function Cart() {
         address: '',
         agreement: false
     })
+    const {loading, error, success} = useState(state => state.ServiceAdd);
     const [disabled, setDisabled] = useState(true)
     const dispatch = useDispatch()
 
@@ -59,7 +60,7 @@ function Cart() {
 
         const order = Object.assign({}, { 'owner': owner }, { 'items': items })
         console.log(order)
-        const response = fetch('http://localhost:7070/api/order', {
+        const response = fetch(`${proccess.env.REACT_APP_ORDER_URL}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -129,6 +130,9 @@ function Cart() {
             </section>
             <section className="order">
                 <h2 className="text-center">Оформить заказ</h2>
+                {(error && <p className='error'>Произошла ошибка!</p>) ||
+                    (loading && <div className='preloader'><span></span><span></span><span></span><span></span></div>) ||
+                    (success && <p className='success'>Заказ оформлен</p>) ||
                 <div className="card" style={{ maxWidth: '30rem', margin: 'auto' }}>
                     <form className="card-body">
                         <div className="form-group">
@@ -148,7 +152,7 @@ function Cart() {
                             Оформить
                         </button>
                     </form>
-                </div>
+                </div>}
             </section>
         </Fragment>
     )
